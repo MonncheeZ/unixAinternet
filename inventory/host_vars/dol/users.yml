@@ -1,0 +1,5 @@
+---
+admin_user_name: monncheez
+admin_user_ssh_keys:
+  - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6wsx3oAqLdr4OzoYZ7lLrgUIb0LksykF6ZLVyXy/FA mony.krenkova7@gmail.cz"
+  - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL/Fkzl8yQ2uYezPeinHhlfhrdP4jUj2C2k8wSu7p5UE monyk@Asus-Monika"

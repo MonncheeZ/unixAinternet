@@ -3,4 +3,5 @@
 # of this Ansible site.
 # The imported playbooks must be idempotent as site.yml may be run repeatedly for periodic remediation.
 
-- import_playbook: playbooks/cowsay.yml
+- import_playbook: playbooks/cowsay.
+- import_playbook: playbooks/users.yml
