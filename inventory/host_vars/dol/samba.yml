@@ -1,0 +1,8 @@
+---
+samba_user: smbuser
+samba_allowed_networks:
+  - { family: ipv6, cidr: "2001:718:1c01::/48" }
+samba_shares:
+  - name: data
+    path: /srv/samba/data
+    read_only: false

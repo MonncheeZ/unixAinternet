@@ -1,0 +1,11 @@
+[global]
+    workgroup = WORKGROUP
+    security = user
+
+{% for share in samba_shares %}
+[{{ share.name }}]
+    path = {{ share.path }}
+    read only = {{ 'yes' if share.read_only else 'no' }}
+    valid users = {{ samba_user }}
+
+{% endfor %}

@@ -1,0 +1,53 @@
+---
+- name: Configure Samba server
+  hosts: dol
+  become: true
+
+  tasks:
+    - name: install Samba
+      ansible.builtin.dnf:
+        name: samba
+        state: present
+
+    - name: create Samba user
+      ansible.builtin.user:
+        name: "{{ samba_user }}"
+        shell: /sbin/nologin
+        create_home: false
+        state: present
+
+    - name: create directory
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ samba_user }}"
+        mode: "0775"
+        setype: samba_share_t
+      loop: "{{ samba_shares }}"
+
+    - name: deploy
+      ansible.builtin.template:
+        src: smb.conf.j2
+        dest: /etc/samba/smb.conf
+        mode: "0644"
+      notify: Restart smb
+
+    - name: enable and start
+      ansible.builtin.service:
+        name: smb
+        state: started
+        enabled: true
+
+    - name: Samba tul
+      ansible.posix.firewalld:
+        rich_rule: 'rule family="{{ item.family }}" source address="{{ item.cidr }}" service name="samba" accept'
+        permanent: true
+        immediate: true
+        state: enabled
+      loop: "{{ samba_allowed_networks }}"
+
+  handlers:
+    - name: restart smb
+      ansible.builtin.service:
+        name: smb
+        state: restarted
